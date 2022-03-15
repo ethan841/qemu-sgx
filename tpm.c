@@ -22,12 +22,17 @@
 #include "qemu/config-file.h"
 #include "qemu/error-report.h"
 
+//function callflow check
+#include <stdio.h>
+
 static QLIST_HEAD(, TPMBackend) tpm_backends =
     QLIST_HEAD_INITIALIZER(tpm_backends);
 
 static const TPMBackendClass *
 tpm_be_find_by_type(enum TpmType type)
 {
+	printf("tpm_be_find_by_type func -- TEST\n");
+
     ObjectClass *oc;
     char *typename = g_strdup_printf("tpm-%s", TpmType_str(type));
 
@@ -47,7 +52,9 @@ tpm_be_find_by_type(enum TpmType type)
  */
 static void tpm_display_backend_drivers(void)
 {
-    int i;
+	printf("tpm_display_backend_drivers func -- TEST\n");
+    
+	int i;
 
     fprintf(stderr, "Supported TPM types (choose only one):\n");
 
@@ -66,7 +73,9 @@ static void tpm_display_backend_drivers(void)
  */
 TPMBackend *qemu_find_tpm_be(const char *id)
 {
-    TPMBackend *drv;
+	printf("tpm_be_find_tpm_be func -- TEST\n");
+    
+	TPMBackend *drv;
 
     if (id) {
         QLIST_FOREACH(drv, &tpm_backends, list) {
@@ -81,6 +90,8 @@ TPMBackend *qemu_find_tpm_be(const char *id)
 
 static int tpm_init_tpmdev(void *dummy, QemuOpts *opts, Error **errp)
 {
+	printf("tpm_init_tpmdev func -- TEST\n");
+
     const char *value;
     const char *id;
     const TPMBackendClass *be;
@@ -139,7 +150,9 @@ static int tpm_init_tpmdev(void *dummy, QemuOpts *opts, Error **errp)
  */
 void tpm_cleanup(void)
 {
-    TPMBackend *drv, *next;
+	printf("tpm_cleanup func -- TEST\n");
+    
+	TPMBackend *drv, *next;
 
     QLIST_FOREACH_SAFE(drv, &tpm_backends, list, next) {
         QLIST_REMOVE(drv, list);
@@ -153,7 +166,9 @@ void tpm_cleanup(void)
  */
 void tpm_init(void)
 {
-    qemu_opts_foreach(qemu_find_opts("tpmdev"),
+	printf("TPM init func -- TEST\n");
+    
+	qemu_opts_foreach(qemu_find_opts("tpmdev"),
                       tpm_init_tpmdev, NULL, &error_fatal);
 }
 
@@ -163,7 +178,9 @@ void tpm_init(void)
  */
 int tpm_config_parse(QemuOptsList *opts_list, const char *optarg)
 {
-    QemuOpts *opts;
+	printf("tpm_config_parse func -- TEST\n");
+    
+	QemuOpts *opts;
 
     if (!strcmp(optarg, "help")) {
         tpm_display_backend_drivers();
@@ -181,7 +198,9 @@ int tpm_config_parse(QemuOptsList *opts_list, const char *optarg)
  */
 TPMInfoList *qmp_query_tpm(Error **errp)
 {
-    TPMBackend *drv;
+	printf("qmp_query_tpm func -- TEST\n");
+    
+	TPMBackend *drv;
     TPMInfoList *info, *head = NULL, *cur_item = NULL;
 
     QLIST_FOREACH(drv, &tpm_backends, list) {
@@ -205,7 +224,9 @@ TPMInfoList *qmp_query_tpm(Error **errp)
 
 TpmTypeList *qmp_query_tpm_types(Error **errp)
 {
-    unsigned int i = 0;
+	printf("qmp_query_tpm_types func -- TEST\n");
+    
+	unsigned int i = 0;
     TpmTypeList *head = NULL, *prev = NULL, *cur_item;
 
     for (i = 0; i < TPM_TYPE__MAX; i++) {
@@ -228,7 +249,9 @@ TpmTypeList *qmp_query_tpm_types(Error **errp)
 }
 TpmModelList *qmp_query_tpm_models(Error **errp)
 {
-    TpmModelList *head = NULL, *prev = NULL, *cur_item;
+	printf("qmp_query_tpm_models func -- TEST\n");
+    
+	TpmModelList *head = NULL, *prev = NULL, *cur_item;
     GSList *e, *l = object_class_get_list(TYPE_TPM_IF, false);
 
     for (e = l; e; e = e->next) {

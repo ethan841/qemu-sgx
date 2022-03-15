@@ -21,9 +21,14 @@
 #include "block/thread-pool.h"
 #include "qemu/error-report.h"
 
+//func callflow
+#include <stdio.h>
+
 static void tpm_backend_request_completed(void *opaque, int ret)
 {
-    TPMBackend *s = TPM_BACKEND(opaque);
+	printf("tpm_backend_request_completed func -- TEST\n");
+    
+	TPMBackend *s = TPM_BACKEND(opaque);
     TPMIfClass *tic = TPM_IF_GET_CLASS(s->tpmif);
 
     tic->request_completed(s->tpmif, ret);
@@ -35,7 +40,9 @@ static void tpm_backend_request_completed(void *opaque, int ret)
 
 static int tpm_backend_worker_thread(gpointer data)
 {
-    TPMBackend *s = TPM_BACKEND(data);
+	printf("tpm_backend_request_thread func -- TEST\n");
+    
+	TPMBackend *s = TPM_BACKEND(data);
     TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
     Error *err = NULL;
 
@@ -50,21 +57,27 @@ static int tpm_backend_worker_thread(gpointer data)
 
 void tpm_backend_finish_sync(TPMBackend *s)
 {
-    while (s->cmd) {
+	printf("tpm_backend_finish_sync func -- TEST\n");
+    
+	while (s->cmd) {
         aio_poll(qemu_get_aio_context(), true);
     }
 }
 
 enum TpmType tpm_backend_get_type(TPMBackend *s)
 {
-    TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
+	printf("tpm_backend_get_type func -- TEST\n");
+    
+	TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
 
     return k->type;
 }
 
 int tpm_backend_init(TPMBackend *s, TPMIf *tpmif, Error **errp)
 {
-    if (s->tpmif) {
+	printf("tpm_backend_init func -- TEST\n");
+    
+	if (s->tpmif) {
         error_setg(errp, "TPM backend '%s' is already initialized", s->id);
         return -1;
     }
@@ -79,7 +92,9 @@ int tpm_backend_init(TPMBackend *s, TPMIf *tpmif, Error **errp)
 
 int tpm_backend_startup_tpm(TPMBackend *s, size_t buffersize)
 {
-    int res = 0;
+	printf("tpm_backend_startup_tpm func -- TEST\n");
+    
+	int res = 0;
     TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
 
     /* terminate a running TPM */
@@ -101,6 +116,8 @@ void tpm_backend_deliver_request(TPMBackend *s, TPMBackendCmd *cmd)
 {
     ThreadPool *pool = aio_get_thread_pool(qemu_get_aio_context());
 
+    printf("tpm backend deliver request Starting point - TEST\n");
+
     if (s->cmd != NULL) {
         error_report("There is a TPM request pending");
         return;
@@ -114,7 +131,9 @@ void tpm_backend_deliver_request(TPMBackend *s, TPMBackendCmd *cmd)
 
 void tpm_backend_reset(TPMBackend *s)
 {
-    TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
+	printf("tpm_backend_reset func -- TEST\n");
+    
+	TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
 
     if (k->reset) {
         k->reset(s);
@@ -127,14 +146,18 @@ void tpm_backend_reset(TPMBackend *s)
 
 void tpm_backend_cancel_cmd(TPMBackend *s)
 {
-    TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
+	printf("tpm_backend_cancel_cmd func -- TEST\n");
+    
+	TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
 
     k->cancel_cmd(s);
 }
 
 bool tpm_backend_get_tpm_established_flag(TPMBackend *s)
 {
-    TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
+	printf("tpm_backend_get_tpm_established_flag func -- TEST\n");
+    
+	TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
 
     return k->get_tpm_established_flag ?
            k->get_tpm_established_flag(s) : false;
@@ -142,7 +165,9 @@ bool tpm_backend_get_tpm_established_flag(TPMBackend *s)
 
 int tpm_backend_reset_tpm_established_flag(TPMBackend *s, uint8_t locty)
 {
-    TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
+	printf("tpm_backend_reset_tpm_established_flag func -- TEST\n");
+    
+	TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
 
     return k->reset_tpm_established_flag ?
            k->reset_tpm_established_flag(s, locty) : 0;
@@ -150,14 +175,18 @@ int tpm_backend_reset_tpm_established_flag(TPMBackend *s, uint8_t locty)
 
 TPMVersion tpm_backend_get_tpm_version(TPMBackend *s)
 {
-    TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
+	printf("tpm_backend_get_tpm_version func -- TEST\n");
+    
+	TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
 
     return k->get_tpm_version(s);
 }
 
 size_t tpm_backend_get_buffer_size(TPMBackend *s)
 {
-    TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
+	printf("tpm_backend_get_buffer_size func -- TEST\n");
+    
+	TPMBackendClass *k = TPM_BACKEND_GET_CLASS(s);
 
     return k->get_buffer_size(s);
 }
@@ -177,7 +206,9 @@ TPMInfo *tpm_backend_query_tpm(TPMBackend *s)
 
 static void tpm_backend_instance_finalize(Object *obj)
 {
-    TPMBackend *s = TPM_BACKEND(obj);
+	printf("tpm_backend_instance_finalize func -- TEST\n");
+    
+	TPMBackend *s = TPM_BACKEND(obj);
 
     object_unref(OBJECT(s->tpmif));
     g_free(s->id);
@@ -200,7 +231,9 @@ static const TypeInfo tpm_if_info = {
 
 static void register_types(void)
 {
-    type_register_static(&tpm_backend_info);
+	printf("tpm.c register_types func -- TEST\n");
+    
+	type_register_static(&tpm_backend_info);
     type_register_static(&tpm_if_info);
 }
 

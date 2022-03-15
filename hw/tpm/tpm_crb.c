@@ -32,6 +32,9 @@
 #include "tpm_ppi.h"
 #include "trace.h"
 
+//func callflow check
+#include <stdio.h>
+
 typedef struct CRBState {
     DeviceState parent_obj;
 
@@ -85,6 +88,8 @@ enum crb_cancel {
 static uint64_t tpm_crb_mmio_read(void *opaque, hwaddr addr,
                                   unsigned size)
 {
+    printf("tpm_crb_mmio_read func -- TEST\n");
+    
     CRBState *s = CRB(opaque);
     void *regs = (void *)&s->regs + (addr & ~3);
     unsigned offset = addr & 3;
@@ -103,6 +108,8 @@ static uint64_t tpm_crb_mmio_read(void *opaque, hwaddr addr,
 
 static uint8_t tpm_crb_get_active_locty(CRBState *s)
 {
+    printf("tpm_crb_get_active_locty func -- TEST\n");
+    
     if (!ARRAY_FIELD_EX32(s->regs, CRB_LOC_STATE, locAssigned)) {
         return TPM_CRB_NO_LOCALITY;
     }
@@ -112,6 +119,8 @@ static uint8_t tpm_crb_get_active_locty(CRBState *s)
 static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
                                uint64_t val, unsigned size)
 {
+    printf("tpm_crb_mmio_write func -- TEST\n");
+    
     CRBState *s = CRB(opaque);
     uint8_t locty =  addr >> 12;
 
@@ -189,6 +198,8 @@ static const MemoryRegionOps tpm_crb_memory_ops = {
 
 static void tpm_crb_request_completed(TPMIf *ti, int ret)
 {
+    printf("tpm_crb_request_completed func -- TEST\n");
+    
     CRBState *s = CRB(ti);
 
     s->regs[R_CRB_CTRL_START] &= ~CRB_START_INVOKE;
@@ -200,6 +211,8 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
 
 static enum TPMVersion tpm_crb_get_version(TPMIf *ti)
 {
+    printf("tpm_crb_get_version func -- TEST\n");
+    
     CRBState *s = CRB(ti);
 
     return tpm_backend_get_tpm_version(s->tpmbe);
@@ -207,6 +220,8 @@ static enum TPMVersion tpm_crb_get_version(TPMIf *ti)
 
 static int tpm_crb_pre_save(void *opaque)
 {
+    printf("tpm_crb_pre_save func -- TEST\n");
+    
     CRBState *s = opaque;
 
     tpm_backend_finish_sync(s->tpmbe);
@@ -231,6 +246,8 @@ static Property tpm_crb_properties[] = {
 
 static void tpm_crb_reset(void *dev)
 {
+    printf("tpm_crb_reset func -- TEST\n");
+    
     CRBState *s = CRB(dev);
 
     if (s->ppi_enabled) {

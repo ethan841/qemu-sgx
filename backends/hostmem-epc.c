@@ -40,7 +40,10 @@ sgx_epc_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
     }
     backend->force_prealloc = mem_prealloc;
 
+    printf("create backend with size = %ld -- TEST\n", backend->size);
+
     fd = open("/dev/sgx/virt_epc", O_RDWR);
+    printf("Opening /dev/sgx/virt_epc ---- TEST\n");
     if (fd < 0) {
         error_setg_errno(errp, errno,
                          "failed to open /dev/sgx/virt_epc to alloc SGX EPC");

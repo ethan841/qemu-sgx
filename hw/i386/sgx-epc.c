@@ -234,6 +234,8 @@ void pc_machine_init_sgx_epc(PCMachineState *pcms)
     }
 
     sgx_epc = g_malloc0(sizeof(*sgx_epc));
+    printf("sizeof EPC Memory - %lx\n", sizeof(*sgx_epc));
+    printf("sizeof EPC Memory(2) - %ld\n", sizeof(*sgx_epc));
     pcms->sgx_epc = sgx_epc;
 
     sgx_epc->base = 0x100000000ULL + pcms->above_4g_mem_size;

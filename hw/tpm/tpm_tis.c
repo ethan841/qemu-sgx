@@ -34,6 +34,12 @@
 #include "tpm_ppi.h"
 #include "trace.h"
 
+//function callflow check
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define TPM_TIS_NUM_LOCALITIES      5     /* per spec */
 #define TPM_TIS_LOCALITY_SHIFT      12
 #define TPM_TIS_NO_LOCALITY         0xff
@@ -100,13 +106,16 @@ static uint64_t tpm_tis_mmio_read(void *opaque, hwaddr addr,
 
 static uint8_t tpm_tis_locality_from_addr(hwaddr addr)
 {
-    return (uint8_t)((addr >> TPM_TIS_LOCALITY_SHIFT) & 0x7);
+	//printf("tpm_tis_locality_from_addr func -- TEST\n");
+	return (uint8_t)((addr >> TPM_TIS_LOCALITY_SHIFT) & 0x7);
 }
 
 static void tpm_tis_show_buffer(const unsigned char *buffer,
                                 size_t buffer_size, const char *string)
 {
-    size_t len, i;
+	printf("tpm_tis_show_buffer func -- TEST\n");
+    
+	size_t len, i;
     char *line_buffer, *p;
 
     len = MIN(tpm_cmd_get_size(buffer), buffer_size);
@@ -152,9 +161,11 @@ static void tpm_tis_sts_set(TPMLocality *l, uint32_t flags)
  */
 static void tpm_tis_tpm_send(TPMState *s, uint8_t locty)
 {
+    printf("tpm_tis_tpm_send func -- TEST\n");
+    
     if (trace_event_get_state_backends(TRACE_TPM_TIS_SHOW_BUFFER)) {
-        tpm_tis_show_buffer(s->buffer, s->be_buffer_size, "To TPM");
-    }
+    tpm_tis_show_buffer(s->buffer, s->be_buffer_size, "To TPM");
+}
 
     /*
      * rw_offset serves as length indicator for length of data;
@@ -176,6 +187,8 @@ static void tpm_tis_tpm_send(TPMState *s, uint8_t locty)
 /* raise an interrupt if allowed */
 static void tpm_tis_raise_irq(TPMState *s, uint8_t locty, uint32_t irqmask)
 {
+    printf("tpm_tis_raise_irq func -- TEST\n");
+    
     if (!TPM_TIS_IS_VALID_LOCTY(locty)) {
         return;
     }
@@ -190,6 +203,8 @@ static void tpm_tis_raise_irq(TPMState *s, uint8_t locty, uint32_t irqmask)
 
 static uint32_t tpm_tis_check_request_use_except(TPMState *s, uint8_t locty)
 {
+    printf("tpm_tis_check_ewquest_use_except func -- TEST\n");
+    
     uint8_t l;
 
     for (l = 0; l < TPM_TIS_NUM_LOCALITIES; l++) {
@@ -206,6 +221,8 @@ static uint32_t tpm_tis_check_request_use_except(TPMState *s, uint8_t locty)
 
 static void tpm_tis_new_active_locality(TPMState *s, uint8_t new_active_locty)
 {
+    printf("tpm_tis_new_active_locality func -- TEST\n");
+    
     bool change = (s->active_locty != new_active_locty);
     bool is_seize;
     uint8_t mask;
@@ -247,6 +264,8 @@ static void tpm_tis_new_active_locality(TPMState *s, uint8_t new_active_locty)
 /* abort -- this function switches the locality */
 static void tpm_tis_abort(TPMState *s)
 {
+    printf("tpm_tis_abort func -- TEST\n");
+    
     s->rw_offset = 0;
 
     trace_tpm_tis_abort(s->next_locty);
@@ -273,6 +292,8 @@ static void tpm_tis_abort(TPMState *s)
 /* prepare aborting current command */
 static void tpm_tis_prep_abort(TPMState *s, uint8_t locty, uint8_t newlocty)
 {
+    printf("tpm_tis_prep_abort func -- TEST\n");
+    
     uint8_t busy_locty;
 
     assert(TPM_TIS_IS_VALID_LOCTY(newlocty));
@@ -303,6 +324,8 @@ static void tpm_tis_prep_abort(TPMState *s, uint8_t locty, uint8_t newlocty)
  */
 static void tpm_tis_request_completed(TPMIf *ti, int ret)
 {
+    printf("tpm_tis_request_completed func -- TEST\n");
+    
     TPMState *s = TPM(ti);
     uint8_t locty = s->cmd.locty;
     uint8_t l;
@@ -338,6 +361,8 @@ static void tpm_tis_request_completed(TPMIf *ti, int ret)
  */
 static uint32_t tpm_tis_data_read(TPMState *s, uint8_t locty)
 {
+    printf("tpm_tis_data_read func -- TEST\n");
+    
     uint32_t ret = TPM_TIS_NO_DATA_BYTE;
     uint16_t len;
 
@@ -360,6 +385,8 @@ static uint32_t tpm_tis_data_read(TPMState *s, uint8_t locty)
 #ifdef DEBUG_TIS
 static void tpm_tis_dump_state(void *opaque, hwaddr addr)
 {
+    printf("tpm_tis_dump_state func -- TEST\n");
+    
     static const unsigned regs[] = {
         TPM_TIS_REG_ACCESS,
         TPM_TIS_REG_INT_ENABLE,
@@ -408,6 +435,8 @@ static void tpm_tis_dump_state(void *opaque, hwaddr addr)
 static uint64_t tpm_tis_mmio_read(void *opaque, hwaddr addr,
                                   unsigned size)
 {
+    printf("tpm_tis_mmio_read func -- TEST\n");
+    
     TPMState *s = opaque;
     uint16_t offset = addr & 0xffc;
     uint8_t shift = (addr & 0x3) * 8;
@@ -529,6 +558,8 @@ static uint64_t tpm_tis_mmio_read(void *opaque, hwaddr addr,
 static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
                                uint64_t val, unsigned size)
 {
+    printf("tpm_tis_mmio_write func -- TEST\n");
+    
     TPMState *s = opaque;
     uint16_t off = addr & 0xffc;
     uint8_t shift = (addr & 0x3) * 8;
@@ -537,6 +568,10 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
     int c, set_new_locty = 1;
     uint16_t len;
     uint32_t mask = (size == 1) ? 0xff : ((size == 2) ? 0xffff : ~0);
+
+    //tpm commandline fileops
+    FILE *out; // logger
+    FILE *out2; // commandline parse
 
     trace_tpm_tis_mmio_write(size, addr, val);
 
@@ -560,6 +595,27 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
 
     switch (off) {
     case TPM_TIS_REG_ACCESS:
+        printf("------TPM_TIS_REG_ACCESS %x and val = %lu\n", TPM_TIS_REG_ACCESS, val);
+        
+        char path[] = "/home/mobileos7/SGX/VM/tpm_cmdline.bin";
+
+        if(val == 2){
+            printf("---------CLEAR TPM COMMANDLINE----------\n");
+            remove(path);
+        }
+        /*
+        int file_ops2 = 1;
+        if((out2=fopen("/home/mobileos7/SGX/VM/tpm_cmdline.bin", "ab"))==NULL){
+            printf("file not exist!");
+            file_ops2 = 0;
+        }
+
+        if (file_ops2 == 1){
+            rewind(out2);
+        }
+
+        fclose(out2);
+        */
 
         if ((val & TPM_TIS_ACCESS_SEIZE)) {
             val &= ~(TPM_TIS_ACCESS_REQUEST_USE |
@@ -663,6 +719,7 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
 
         break;
     case TPM_TIS_REG_INT_ENABLE:
+        printf("------TPM_TIS_REG_INT_ENABLE %x and val = %lu\n", TPM_TIS_REG_INT_ENABLE, val);
         if (s->active_locty != locty) {
             break;
         }
@@ -676,6 +733,7 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
         /* hard wired -- ignore */
         break;
     case TPM_TIS_REG_INT_STATUS:
+        printf("------TPM_TIS_REG_INT_STATUS %x and val = %lu\n", TPM_TIS_REG_INT_STATUS, val);
         if (s->active_locty != locty) {
             break;
         }
@@ -692,6 +750,8 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
         s->loc[locty].ints &= ~(val & TPM_TIS_INTERRUPTS_SUPPORTED);
         break;
     case TPM_TIS_REG_STS:
+        printf("------TPM_TIS_REG_STS %x and val = %lu\n", TPM_TIS_REG_STS, val);
+
         if (s->active_locty != locty) {
             break;
         }
@@ -778,18 +838,52 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
         break;
     case TPM_TIS_REG_DATA_FIFO:
     case TPM_TIS_REG_DATA_XFIFO ... TPM_TIS_REG_DATA_XFIFO_END:
+        // write operation in binary file.
+        printf("------TPM_TIS_REG_DATA_FIFO/XFIFO %x and val = %lu\n", TPM_TIS_REG_DATA_FIFO, val);
+        printf("----------Write val in tpm_cmd.bin file.----------\n");
+
+        int file_ops = 1;
+        //cmdline logger
+        if((out=fopen("/home/mobileos7/SGX/VM/tpm_cmd.bin", "ab"))==NULL){
+            printf("file not exist!");
+            file_ops = 0;
+        }
+
+        if(file_ops == 1){
+            fwrite(&val, sizeof(uint8_t), 1, out);
+        }
+
+        fclose(out);
+
+        printf("-----CMDLINE UPDATE!-----\n");
+        
+        int file_ops2 = 1;
+        
+        if((out2=fopen("/home/mobileos7/SGX/VM/tpm_cmdline.bin", "ab"))==NULL){
+            printf("file not exist!");
+            file_ops2 = 0;
+        }
+
+        if (file_ops2 == 1){
+            fwrite(&val, sizeof(uint8_t), 1, out2);
+        }
+
+        fclose(out2);
+
         /* data fifo */
         if (s->active_locty != locty) {
             break;
         }
-
+        
         if (s->loc[locty].state == TPM_TIS_STATE_IDLE ||
             s->loc[locty].state == TPM_TIS_STATE_EXECUTION ||
             s->loc[locty].state == TPM_TIS_STATE_COMPLETION) {
             /* drop the byte */
+            printf("------------drop the byte - IDLE/EXECUTION/COMPLETION\n");
         } else {
             trace_tpm_tis_mmio_write_data2send(val, size);
             if (s->loc[locty].state == TPM_TIS_STATE_READY) {
+                printf("------------STATE_READY\n");
                 s->loc[locty].state = TPM_TIS_STATE_RECEPTION;
                 tpm_tis_sts_set(&s->loc[locty],
                                 TPM_TIS_STS_EXPECT | TPM_TIS_STS_VALID);
@@ -803,6 +897,7 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
 
             while ((s->loc[locty].sts & TPM_TIS_STS_EXPECT) && size > 0) {
                 if (s->rw_offset < s->be_buffer_size) {
+                    printf("------------ STS_EXPECT && size\n");
                     s->buffer[s->rw_offset++] =
                         (uint8_t)val;
                     val >>= 8;
@@ -816,14 +911,17 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
             if (s->rw_offset > 5 &&
                 (s->loc[locty].sts & TPM_TIS_STS_EXPECT)) {
                 /* we have a packet length - see if we have all of it */
+                printf("------------ check for complete packet\n");
                 bool need_irq = !(s->loc[locty].sts & TPM_TIS_STS_VALID);
 
                 len = tpm_cmd_get_size(&s->buffer);
                 if (len > s->rw_offset) {
+                    printf("------------ tpm_cmd_get_size & cmd buffer = %s\n", s->buffer);
                     tpm_tis_sts_set(&s->loc[locty],
                                     TPM_TIS_STS_EXPECT | TPM_TIS_STS_VALID);
                 } else {
                     /* packet complete */
+                    printf("------------packet complete\n");
                     tpm_tis_sts_set(&s->loc[locty], TPM_TIS_STS_VALID);
                 }
                 if (need_irq) {
@@ -833,6 +931,7 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
         }
         break;
     case TPM_TIS_REG_INTERFACE_ID:
+        printf("------TPM_TIS_REG_INTERFACE_ID %x and val = %lu\n", TPM_TIS_REG_INTERFACE_ID, val);
         if (val & TPM_TIS_IFACE_ID_INT_SEL_LOCK) {
             for (l = 0; l < TPM_TIS_NUM_LOCALITIES; l++) {
                 s->loc[l].iface_id |= TPM_TIS_IFACE_ID_INT_SEL_LOCK;
@@ -857,6 +956,8 @@ static const MemoryRegionOps tpm_tis_memory_ops = {
  */
 static enum TPMVersion tpm_tis_get_tpm_version(TPMIf *ti)
 {
+    printf("tpm_tis_get_tpm_version func -- TEST\n");
+    
     TPMState *s = TPM(ti);
 
     if (tpm_backend_had_startup_error(s->be_driver)) {
@@ -872,6 +973,8 @@ static enum TPMVersion tpm_tis_get_tpm_version(TPMIf *ti)
  */
 static void tpm_tis_reset(DeviceState *dev)
 {
+    printf("tpm_tis_reset func -- TEST\n");
+    
     TPMState *s = TPM(dev);
     int c;
 
@@ -916,6 +1019,8 @@ static void tpm_tis_reset(DeviceState *dev)
 
 static int tpm_tis_pre_save(void *opaque)
 {
+    printf("tpm_tis_pre_save func -- TEST\n");
+    
     TPMState *s = opaque;
     uint8_t locty = s->active_locty;
 
@@ -974,6 +1079,8 @@ static Property tpm_tis_properties[] = {
 
 static void tpm_tis_realizefn(DeviceState *dev, Error **errp)
 {
+    printf("tpm_tis_realizefn func -- TEST\n");
+    
     TPMState *s = TPM(dev);
 
     if (!tpm_find()) {
@@ -1004,6 +1111,8 @@ static void tpm_tis_realizefn(DeviceState *dev, Error **errp)
 
 static void tpm_tis_initfn(Object *obj)
 {
+    printf("tpm_tis_initfn func -- TEST\n");
+    
     TPMState *s = TPM(obj);
 
     memory_region_init_io(&s->mmio, OBJECT(s), &tpm_tis_memory_ops,
@@ -1013,6 +1122,8 @@ static void tpm_tis_initfn(Object *obj)
 
 static void tpm_tis_class_init(ObjectClass *klass, void *data)
 {
+    printf("tpm_tis_class_init func -- TEST\n");
+    
     DeviceClass *dc = DEVICE_CLASS(klass);
     TPMIfClass *tc = TPM_IF_CLASS(klass);
 
@@ -1039,6 +1150,8 @@ static const TypeInfo tpm_tis_info = {
 
 static void tpm_tis_register(void)
 {
+    printf("tpm_tis_register func / tpm_tis.c -- TEST\n");
+    
     type_register_static(&tpm_tis_info);
 }
 

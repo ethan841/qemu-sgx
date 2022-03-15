@@ -30,11 +30,15 @@
 #include "hw/qdev.h"
 #include "trace.h"
 
+//func callflow
+#include <stdio.h>
+
 /* tpm backend property */
 
 static void get_tpm(Object *obj, Visitor *v, const char *name, void *opaque,
                     Error **errp)
 {
+    printf("get_tpm func -- TEST\n");
     DeviceState *dev = DEVICE(obj);
     TPMBackend **be = qdev_get_prop_ptr(dev, opaque);
     char *p;
@@ -47,6 +51,8 @@ static void get_tpm(Object *obj, Visitor *v, const char *name, void *opaque,
 static void set_tpm(Object *obj, Visitor *v, const char *name, void *opaque,
                     Error **errp)
 {
+    printf("set_tpm func -- TEST\n");
+    
     DeviceState *dev = DEVICE(obj);
     Error *local_err = NULL;
     Property *prop = opaque;
@@ -76,6 +82,8 @@ static void set_tpm(Object *obj, Visitor *v, const char *name, void *opaque,
 
 static void release_tpm(Object *obj, const char *name, void *opaque)
 {
+    printf("release_tpm func -- TEST\n");
+    
     DeviceState *dev = DEVICE(obj);
     Property *prop = opaque;
     TPMBackend **be = qdev_get_prop_ptr(dev, prop);
@@ -98,6 +106,8 @@ const PropertyInfo qdev_prop_tpm = {
  */
 void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len)
 {
+    printf("tpm_util_write_fatal_error_response func -- TEST\n");
+    
     if (out_len >= sizeof(struct tpm_resp_hdr)) {
         tpm_cmd_set_tag(out, TPM_TAG_RSP_COMMAND);
         tpm_cmd_set_size(out, sizeof(struct tpm_resp_hdr));
@@ -107,6 +117,8 @@ void tpm_util_write_fatal_error_response(uint8_t *out, uint32_t out_len)
 
 bool tpm_util_is_selftest(const uint8_t *in, uint32_t in_len)
 {
+    printf("tpm_util_is_selftest func -- TEST\n");
+    
     if (in_len >= sizeof(struct tpm_req_hdr)) {
         return tpm_cmd_get_ordinal(in) == TPM_ORD_ContinueSelfTest;
     }
@@ -123,6 +135,8 @@ static int tpm_util_request(int fd,
                             void *response,
                             size_t responselen)
 {
+    printf("tpm_util_request func -- TEST\n");
+    
     fd_set readfds;
     int n;
     struct timeval tv = {
@@ -169,6 +183,8 @@ static int tpm_util_test(int fd,
                          size_t requestlen,
                          uint16_t *return_tag)
 {
+    printf("tpm_util_test func -- TEST\n");
+    
     char buf[1024];
     ssize_t ret;
 
@@ -198,6 +214,9 @@ int tpm_util_test_tpmdev(int tpm_fd, TPMVersion *tpm_version)
      * Sending a TPM2 command to a TPM 1.2 will give a TPM 1.2 tag
      * in the header and an error code.
      */
+    
+    printf("tpm_util_test_tpmdev func -- TEST\n");
+    
     const struct tpm_req_hdr test_req = {
         .tag = cpu_to_be16(TPM_TAG_RQU_COMMAND),
         .len = cpu_to_be32(sizeof(test_req)),
@@ -238,6 +257,8 @@ int tpm_util_test_tpmdev(int tpm_fd, TPMVersion *tpm_version)
 int tpm_util_get_buffer_size(int tpm_fd, TPMVersion tpm_version,
                              size_t *buffersize)
 {
+    printf("tpm_util_get_buffer_size func -- TEST\n");
+    
     int ret;
 
     switch (tpm_version) {
@@ -346,6 +367,8 @@ int tpm_util_get_buffer_size(int tpm_fd, TPMVersion tpm_version,
 
 void tpm_sized_buffer_reset(TPMSizedBuffer *tsb)
 {
+    printf("tpm_size_buffer_reset func -- TEST\n");
+    
     g_free(tsb->buffer);
     tsb->buffer = NULL;
     tsb->size = 0;

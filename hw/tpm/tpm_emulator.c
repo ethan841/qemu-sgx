@@ -42,6 +42,9 @@
 #include "chardev/char-fe.h"
 #include "trace.h"
 
+//function callflow check
+#include <stdio.h>
+
 #define TYPE_TPM_EMULATOR "tpm-emulator"
 #define TPM_EMULATOR(obj) \
     OBJECT_CHECK(TPMEmulator, (obj), TYPE_TPM_EMULATOR)
@@ -85,6 +88,8 @@ typedef struct TPMEmulator {
 static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
                                 size_t msg_len_in, size_t msg_len_out)
 {
+    printf("tpm_emulator_ctrlcmd func -- TEST\n");
+
     CharBackend *dev = &tpm->ctrl_chr;
     uint32_t cmd_no = cpu_to_be32(cmd);
     ssize_t n = sizeof(uint32_t) + msg_len_in;
@@ -122,6 +127,7 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
                                      bool *selftest_done,
                                      Error **err)
 {
+    printf("tpm_emulator_unix_tx_bufs func -- TEST\n");
     ssize_t ret;
     bool is_selftest = false;
 
@@ -158,6 +164,8 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
 static int tpm_emulator_set_locality(TPMEmulator *tpm_emu, uint8_t locty_number,
                                      Error **errp)
 {
+	printf("tpm_emulator_set_locality func -- TEST\n");
+
     ptm_loc loc;
 
     if (tpm_emu->cur_locty_number == locty_number) {
@@ -190,7 +198,9 @@ static int tpm_emulator_set_locality(TPMEmulator *tpm_emu, uint8_t locty_number,
 static void tpm_emulator_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
                                         Error **errp)
 {
-    TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+	printf("tpm_emulator_handle_request func -- TEST\n");
+	   
+	TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
 
     trace_tpm_emulator_handle_request();
 
@@ -204,7 +214,9 @@ static void tpm_emulator_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
 
 static int tpm_emulator_probe_caps(TPMEmulator *tpm_emu)
 {
-    if (tpm_emulator_ctrlcmd(tpm_emu, CMD_GET_CAPABILITY,
+    printf("tpm_emulator_probe_caps func -- TEST\n");
+
+	if (tpm_emulator_ctrlcmd(tpm_emu, CMD_GET_CAPABILITY,
                              &tpm_emu->caps, 0, sizeof(tpm_emu->caps)) < 0) {
         error_report("tpm-emulator: probing failed : %s", strerror(errno));
         return -1;
@@ -219,6 +231,8 @@ static int tpm_emulator_probe_caps(TPMEmulator *tpm_emu)
 
 static int tpm_emulator_check_caps(TPMEmulator *tpm_emu)
 {
+	printf("tpm_emulator_check_caps func -- TEST\n");
+
     ptm_cap caps = 0;
     const char *tpm = NULL;
 
@@ -252,6 +266,8 @@ static int tpm_emulator_check_caps(TPMEmulator *tpm_emu)
 
 static int tpm_emulator_stop_tpm(TPMBackend *tb)
 {
+	printf("tpm_emulator_stop_tpm func -- TEST\n");
+
     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
     ptm_res res;
 
@@ -274,7 +290,9 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
                                         size_t wanted_size,
                                         size_t *actual_size)
 {
-    TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+	printf("tpm_emulator_set_buffer func\n");		
+		
+	TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
     ptm_setbuffersize psbs;
 
     if (tpm_emulator_stop_tpm(tb) < 0) {
@@ -312,6 +330,8 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
 static int tpm_emulator_startup_tpm_resume(TPMBackend *tb, size_t buffersize,
                                      bool is_resume)
 {
+	printf("tpm_emulator_startup_tpm_resume func -- TEST\n");
+
     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
     ptm_init init = {
         .u.req.init_flags = 0,
@@ -349,12 +369,16 @@ err_exit:
 
 static int tpm_emulator_startup_tpm(TPMBackend *tb, size_t buffersize)
 {
+	printf("tpm_emulator_startup_tpm func -- TEST\n");
+
     return tpm_emulator_startup_tpm_resume(tb, buffersize, false);
 }
 
 static bool tpm_emulator_get_tpm_established_flag(TPMBackend *tb)
 {
-    TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+    printf("tpm_emulator_get_tpm_established_flag func -- TEST\n");
+		
+	TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
     ptm_est est;
 
     if (tpm_emu->established_flag_cached) {
@@ -378,6 +402,8 @@ static bool tpm_emulator_get_tpm_established_flag(TPMBackend *tb)
 static int tpm_emulator_reset_tpm_established_flag(TPMBackend *tb,
                                                    uint8_t locty)
 {
+	printf("tpm_emulator_reset_tpm_established_flag func -- TEST\n");
+
     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
     ptm_reset_est reset_est;
     ptm_res res;
@@ -410,6 +436,8 @@ static int tpm_emulator_reset_tpm_established_flag(TPMBackend *tb,
 
 static void tpm_emulator_cancel_cmd(TPMBackend *tb)
 {
+	printf("tpm_emulator_cancel_cmd func -- TEST\n");
+
     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
     ptm_res res;
 
@@ -431,13 +459,17 @@ static void tpm_emulator_cancel_cmd(TPMBackend *tb)
 
 static TPMVersion tpm_emulator_get_tpm_version(TPMBackend *tb)
 {
-    TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+    printf("tpm_emulator_get_tpm_version func -- TEST\n");
+		
+	TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
 
     return tpm_emu->tpm_version;
 }
 
 static size_t tpm_emulator_get_buffer_size(TPMBackend *tb)
 {
+	printf("tpm_emulator_get_buffer_size func -- TEST\n");
+
     size_t actual_size;
 
     if (tpm_emulator_set_buffer_size(tb, 0, &actual_size) < 0) {
@@ -449,6 +481,8 @@ static size_t tpm_emulator_get_buffer_size(TPMBackend *tb)
 
 static int tpm_emulator_block_migration(TPMEmulator *tpm_emu)
 {
+	printf("tpm_emulator_block_migration func -- TEST\n");
+
     Error *err = NULL;
     ptm_cap caps = PTM_CAP_GET_STATEBLOB | PTM_CAP_SET_STATEBLOB |
                    PTM_CAP_STOP;
@@ -472,6 +506,8 @@ static int tpm_emulator_block_migration(TPMEmulator *tpm_emu)
 
 static int tpm_emulator_prepare_data_fd(TPMEmulator *tpm_emu)
 {
+	printf("tpm_emulator_prepare_data_fd func -- TEST\n");	
+
     ptm_res res;
     Error *err = NULL;
     int fds[2] = { -1, -1 };
@@ -509,6 +545,8 @@ err_exit:
 
 static int tpm_emulator_handle_device_opts(TPMEmulator *tpm_emu, QemuOpts *opts)
 {
+	printf("tpm_emulator_handle_device_opts func -- TEST\n");
+
     const char *value;
 
     value = qemu_opt_get(opts, "chardev");
@@ -571,7 +609,9 @@ err:
 
 static TPMBackend *tpm_emulator_create(QemuOpts *opts)
 {
-    TPMBackend *tb = TPM_BACKEND(object_new(TYPE_TPM_EMULATOR));
+	printf("tpm_emulator_create func -- TEST\n");
+
+	TPMBackend *tb = TPM_BACKEND(object_new(TYPE_TPM_EMULATOR));
 
     if (tpm_emulator_handle_device_opts(TPM_EMULATOR(tb), opts)) {
         object_unref(OBJECT(tb));
@@ -583,7 +623,9 @@ static TPMBackend *tpm_emulator_create(QemuOpts *opts)
 
 static TpmTypeOptions *tpm_emulator_get_tpm_options(TPMBackend *tb)
 {
-    TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+	printf("tpm_emulator_get_tpm_options func -- TEST\n");
+    
+	TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
     TpmTypeOptions *options = g_new0(TpmTypeOptions, 1);
 
     options->type = TPM_TYPE_OPTIONS_KIND_EMULATOR;
@@ -615,7 +657,9 @@ static int tpm_emulator_get_state_blob(TPMEmulator *tpm_emu,
                                        TPMSizedBuffer *tsb,
                                        uint32_t *flags)
 {
-    ptm_getstate pgs;
+	printf("tpm_emulator_get_state_blob func -- TEST\n");
+    
+	ptm_getstate pgs;
     ptm_res res;
     ssize_t n;
     uint32_t totlength, length;
@@ -676,7 +720,9 @@ static int tpm_emulator_get_state_blob(TPMEmulator *tpm_emu,
 
 static int tpm_emulator_get_state_blobs(TPMEmulator *tpm_emu)
 {
-    TPMBlobBuffers *state_blobs = &tpm_emu->state_blobs;
+	printf("tpm_emulator_get_state_blobs func -- TEST\n");
+    
+	TPMBlobBuffers *state_blobs = &tpm_emu->state_blobs;
 
     if (tpm_emulator_get_state_blob(tpm_emu, PTM_BLOB_TYPE_PERMANENT,
                                     &state_blobs->permanent,
@@ -713,7 +759,9 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
                                        TPMSizedBuffer *tsb,
                                        uint32_t flags)
 {
-    ssize_t n;
+	printf("tpm_emulator_get_state_blob2 func -- TEST\n");
+    
+	ssize_t n;
     ptm_setstate pss;
     ptm_res tpm_result;
 
@@ -773,7 +821,9 @@ static int tpm_emulator_set_state_blob(TPMEmulator *tpm_emu,
  */
 static int tpm_emulator_set_state_blobs(TPMBackend *tb)
 {
-    TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+	printf("tpm_emulator_get_state_blobs2 func -- TEST\n");
+    
+	TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
     TPMBlobBuffers *state_blobs = &tpm_emu->state_blobs;
 
     trace_tpm_emulator_set_state_blobs();
@@ -802,7 +852,9 @@ static int tpm_emulator_set_state_blobs(TPMBackend *tb)
 
 static int tpm_emulator_pre_save(void *opaque)
 {
-    TPMBackend *tb = opaque;
+	printf("tpm_emulator_pre_save func -- TEST\n");
+    
+	TPMBackend *tb = opaque;
     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
 
     trace_tpm_emulator_pre_save();
@@ -820,7 +872,9 @@ static int tpm_emulator_pre_save(void *opaque)
  */
 static int tpm_emulator_post_load(void *opaque, int version_id)
 {
-    TPMBackend *tb = opaque;
+	printf("tpm_emulator_post_load func -- TEST\n");
+    
+	TPMBackend *tb = opaque;
     int ret;
 
     ret = tpm_emulator_set_state_blobs(tb);
@@ -865,7 +919,9 @@ static const VMStateDescription vmstate_tpm_emulator = {
 
 static void tpm_emulator_inst_init(Object *obj)
 {
-    TPMEmulator *tpm_emu = TPM_EMULATOR(obj);
+	printf("tpm_emulator_inst_init func -- TEST\n");
+    
+	TPMEmulator *tpm_emu = TPM_EMULATOR(obj);
 
     trace_tpm_emulator_inst_init();
 
@@ -881,7 +937,9 @@ static void tpm_emulator_inst_init(Object *obj)
  */
 static void tpm_emulator_shutdown(TPMEmulator *tpm_emu)
 {
-    ptm_res res;
+	printf("tpm_emulator_shutdown func -- TEST\n");
+    
+	ptm_res res;
 
     if (tpm_emulator_ctrlcmd(tpm_emu, CMD_SHUTDOWN, &res, 0, sizeof(res)) < 0) {
         error_report("tpm-emulator: Could not cleanly shutdown the TPM: %s",
@@ -894,7 +952,9 @@ static void tpm_emulator_shutdown(TPMEmulator *tpm_emu)
 
 static void tpm_emulator_inst_finalize(Object *obj)
 {
-    TPMEmulator *tpm_emu = TPM_EMULATOR(obj);
+	printf("tpm_emulator_inst_finalize func -- TEST\n");
+    
+	TPMEmulator *tpm_emu = TPM_EMULATOR(obj);
     TPMBlobBuffers *state_blobs = &tpm_emu->state_blobs;
 
     tpm_emulator_shutdown(tpm_emu);
@@ -921,7 +981,9 @@ static void tpm_emulator_inst_finalize(Object *obj)
 
 static void tpm_emulator_class_init(ObjectClass *klass, void *data)
 {
-    TPMBackendClass *tbc = TPM_BACKEND_CLASS(klass);
+	printf("tpm_emulator_class_init func -- TEST\n");
+    
+	TPMBackendClass *tbc = TPM_BACKEND_CLASS(klass);
 
     tbc->type = TPM_TYPE_EMULATOR;
     tbc->opts = tpm_emulator_cmdline_opts;
@@ -949,6 +1011,8 @@ static const TypeInfo tpm_emulator_info = {
 
 static void tpm_emulator_register(void)
 {
+	printf("tpm_emulator_register func -- TEST\n");
+
     type_register_static(&tpm_emulator_info);
 }
 
