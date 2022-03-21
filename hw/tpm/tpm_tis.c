@@ -97,6 +97,38 @@ typedef struct TPMState {
 
 #define DEBUG_TIS 0
 
+/* tpm operation write function */
+
+static void cmd_logger(uint64_t* val)
+{
+    FILE* out;
+    FILE* out2;
+    int file_ops = 1;
+    int file_ops2 = 1;
+
+    if((out=fopen("/home/mobileos7/SGX/VM/tpm_cmd.bin", "ab"))==NULL){
+        printf("file not exist!");
+        file_ops = 0;
+    }
+
+    if(file_ops == 1){
+        fwrite(val, sizeof(uint8_t), 1, out);
+    }
+
+    if((out2=fopen("/home/mobileos7/SGX/VM/tpm_cmdline.bin", "ab"))==NULL){
+        printf("file not exist!");
+        file_ops = 0;
+    }
+
+    if(file_ops2 == 1){
+        fwrite(val, sizeof(uint8_t), 1, out2);
+    }
+
+    fclose(out);
+    fclose(out2);
+    printf("-----CMD LOG UPDATE!-----\n");
+}
+
 /* local prototypes */
 
 static uint64_t tpm_tis_mmio_read(void *opaque, hwaddr addr,
@@ -569,10 +601,6 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
     uint16_t len;
     uint32_t mask = (size == 1) ? 0xff : ((size == 2) ? 0xffff : ~0);
 
-    //tpm commandline fileops
-    FILE *out; // logger
-    FILE *out2; // commandline parse
-
     trace_tpm_tis_mmio_write(size, addr, val);
 
     if (locty == 4) {
@@ -601,21 +629,12 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
 
         if(val == 2){
             printf("---------CLEAR TPM COMMANDLINE----------\n");
+            int sys_re __attribute__((unused));;
+            sys_re = system("tpm2_send_command -T 'device' -d /dev/tpm1 < /home/mobileos7/SGX/VM/tpm_cmdline.bin > result.bin");
             remove(path);
         }
-        /*
-        int file_ops2 = 1;
-        if((out2=fopen("/home/mobileos7/SGX/VM/tpm_cmdline.bin", "ab"))==NULL){
-            printf("file not exist!");
-            file_ops2 = 0;
-        }
+        
 
-        if (file_ops2 == 1){
-            rewind(out2);
-        }
-
-        fclose(out2);
-        */
 
         if ((val & TPM_TIS_ACCESS_SEIZE)) {
             val &= ~(TPM_TIS_ACCESS_REQUEST_USE |
@@ -625,6 +644,9 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
         active_locty = s->active_locty;
 
         if ((val & TPM_TIS_ACCESS_ACTIVE_LOCALITY)) {
+            
+            //cmd_logger(&val);
+            
             /* give up locality if currently owned */
             if (s->active_locty == locty) {
                 trace_tpm_tis_mmio_write_release_locty(locty);
@@ -841,34 +863,9 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
         // write operation in binary file.
         printf("------TPM_TIS_REG_DATA_FIFO/XFIFO %x and val = %lu\n", TPM_TIS_REG_DATA_FIFO, val);
         printf("----------Write val in tpm_cmd.bin file.----------\n");
-
-        int file_ops = 1;
-        //cmdline logger
-        if((out=fopen("/home/mobileos7/SGX/VM/tpm_cmd.bin", "ab"))==NULL){
-            printf("file not exist!");
-            file_ops = 0;
-        }
-
-        if(file_ops == 1){
-            fwrite(&val, sizeof(uint8_t), 1, out);
-        }
-
-        fclose(out);
-
-        printf("-----CMDLINE UPDATE!-----\n");
-        
-        int file_ops2 = 1;
-        
-        if((out2=fopen("/home/mobileos7/SGX/VM/tpm_cmdline.bin", "ab"))==NULL){
-            printf("file not exist!");
-            file_ops2 = 0;
-        }
-
-        if (file_ops2 == 1){
-            fwrite(&val, sizeof(uint8_t), 1, out2);
-        }
-
-        fclose(out2);
+    
+        cmd_logger(&val);
+        //cmdline_logger(&val);
 
         /* data fifo */
         if (s->active_locty != locty) {
@@ -1152,6 +1149,13 @@ static void tpm_tis_register(void)
 {
     printf("tpm_tis_register func / tpm_tis.c -- TEST\n");
     
+    char path[] = "/home/mobileos7/SGX/VM/tpm_cmd.bin";
+    char path2[] = "/home/mobileos7/SGX/VM/tpm_cmdline.bin";
+    
+    printf("---------CLEAR TPM COMMAND LOG----------\n");
+    remove(path);
+    remove(path2);
+
     type_register_static(&tpm_tis_info);
 }
 

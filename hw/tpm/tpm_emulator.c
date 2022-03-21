@@ -88,8 +88,6 @@ typedef struct TPMEmulator {
 static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
                                 size_t msg_len_in, size_t msg_len_out)
 {
-    printf("tpm_emulator_ctrlcmd func -- TEST\n");
-
     CharBackend *dev = &tpm->ctrl_chr;
     uint32_t cmd_no = cpu_to_be32(cmd);
     ssize_t n = sizeof(uint32_t) + msg_len_in;
@@ -100,6 +98,9 @@ static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
 
     buf = g_alloca(n);
     memcpy(buf, &cmd_no, sizeof(cmd_no));
+
+    printf("tpm_emulator_ctrlcmd func -- TEST // buf = %u\n", *buf);
+    
     memcpy(buf + sizeof(cmd_no), msg, msg_len_in);
 
     n = qemu_chr_fe_write_all(dev, buf, n);
