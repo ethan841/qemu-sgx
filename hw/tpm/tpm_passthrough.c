@@ -63,6 +63,9 @@ static void tpm_passthrough_cancel_cmd(TPMBackend *tb);
 
 static int tpm_passthrough_unix_read(int fd, uint8_t *buf, uint32_t len)
 {
+    printf("@@@tpm_passthrough_unix_read func ---- TEST\n");
+
+
     int ret;
  reread:
     ret = read(fd, buf, len);
@@ -80,6 +83,8 @@ static void tpm_passthrough_unix_tx_bufs(TPMPassthruState *tpm_pt,
                                          uint8_t *out, uint32_t out_len,
                                          bool *selftest_done, Error **errp)
 {
+    printf("@@@tpm_passthrough_unix_tx_bufs func ---- TEST\n");
+    
     ssize_t ret;
     bool is_selftest;
 
@@ -129,6 +134,8 @@ err_exit:
 static void tpm_passthrough_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
                                            Error **errp)
 {
+    printf("@@@tpm_passthrough_handle_request func ---- TEST\n");
+
     TPMPassthruState *tpm_pt = TPM_PASSTHROUGH(tb);
 
     trace_tpm_passthrough_handle_request(cmd);
@@ -140,6 +147,8 @@ static void tpm_passthrough_handle_request(TPMBackend *tb, TPMBackendCmd *cmd,
 
 static void tpm_passthrough_reset(TPMBackend *tb)
 {
+    printf("@@@tpm_passthrough_reset func ---- TEST\n");
+
     trace_tpm_passthrough_reset();
 
     tpm_passthrough_cancel_cmd(tb);
@@ -147,18 +156,23 @@ static void tpm_passthrough_reset(TPMBackend *tb)
 
 static bool tpm_passthrough_get_tpm_established_flag(TPMBackend *tb)
 {
+    printf("@@@tpm_passthrough_get_tpm_established_flag func ---- TEST\n");
+
     return false;
 }
 
 static int tpm_passthrough_reset_tpm_established_flag(TPMBackend *tb,
                                                       uint8_t locty)
 {
+    printf("@@@tpm_passthrough_reset_tpm_established_flag func ---- TEST\n");
     /* only a TPM 2.0 will support this */
     return 0;
 }
 
 static void tpm_passthrough_cancel_cmd(TPMBackend *tb)
 {
+    printf("@@@tpm_passthrough_cancel func ---- TEST\n");
+
     TPMPassthruState *tpm_pt = TPM_PASSTHROUGH(tb);
     int n;
 
@@ -185,6 +199,8 @@ static void tpm_passthrough_cancel_cmd(TPMBackend *tb)
 
 static TPMVersion tpm_passthrough_get_tpm_version(TPMBackend *tb)
 {
+    printf("@@@tpm_passthrough_get_tpm_version func ---- TEST\n");
+
     TPMPassthruState *tpm_pt = TPM_PASSTHROUGH(tb);
 
     return tpm_pt->tpm_version;
@@ -192,6 +208,8 @@ static TPMVersion tpm_passthrough_get_tpm_version(TPMBackend *tb)
 
 static size_t tpm_passthrough_get_buffer_size(TPMBackend *tb)
 {
+    printf("@@@tpm_passthrough_get_buffer_size func ---- TEST\n");
+
     TPMPassthruState *tpm_pt = TPM_PASSTHROUGH(tb);
     int ret;
 
@@ -212,6 +230,8 @@ static size_t tpm_passthrough_get_buffer_size(TPMBackend *tb)
  */
 static int tpm_passthrough_open_sysfs_cancel(TPMPassthruState *tpm_pt)
 {
+    printf("@@@tpm_passthrough_open_sysfs_cancel func ---- TEST\n");
+
     int fd = -1;
     char *dev;
     char path[PATH_MAX];
@@ -256,6 +276,8 @@ static int tpm_passthrough_open_sysfs_cancel(TPMPassthruState *tpm_pt)
 static int
 tpm_passthrough_handle_device_opts(TPMPassthruState *tpm_pt, QemuOpts *opts)
 {
+    printf("@@@tpm_passthrough_handle_device_opts func ---- TEST\n");
+
     const char *value;
 
     value = qemu_opt_get(opts, "cancel-path");
@@ -294,6 +316,8 @@ tpm_passthrough_handle_device_opts(TPMPassthruState *tpm_pt, QemuOpts *opts)
 
 static TPMBackend *tpm_passthrough_create(QemuOpts *opts)
 {
+    printf("@@@tpm_passthrough_create func ---- TEST\n");
+
     Object *obj = object_new(TYPE_TPM_PASSTHROUGH);
 
     if (tpm_passthrough_handle_device_opts(TPM_PASSTHROUGH(obj), opts)) {
@@ -306,6 +330,8 @@ static TPMBackend *tpm_passthrough_create(QemuOpts *opts)
 
 static int tpm_passthrough_startup_tpm(TPMBackend *tb, size_t buffersize)
 {
+    printf("@@@tpm_passthrough_startup_tpm func ---- TEST\n");
+
     TPMPassthruState *tpm_pt = TPM_PASSTHROUGH(tb);
 
     if (buffersize && buffersize < tpm_pt->tpm_buffersize) {
@@ -320,6 +346,8 @@ static int tpm_passthrough_startup_tpm(TPMBackend *tb, size_t buffersize)
 
 static TpmTypeOptions *tpm_passthrough_get_tpm_options(TPMBackend *tb)
 {
+    printf("@@@tpm_passthrough_get_tpm_options func ---- TEST\n");
+
     TpmTypeOptions *options = g_new0(TpmTypeOptions, 1);
 
     options->type = TPM_TYPE_OPTIONS_KIND_PASSTHROUGH;
@@ -346,6 +374,8 @@ static const QemuOptDesc tpm_passthrough_cmdline_opts[] = {
 
 static void tpm_passthrough_inst_init(Object *obj)
 {
+    printf("@@@tpm_passthrough_inst_init func ---- TEST\n");
+
     TPMPassthruState *tpm_pt = TPM_PASSTHROUGH(obj);
 
     tpm_pt->options = g_new0(TPMPassthroughOptions, 1);
@@ -355,6 +385,8 @@ static void tpm_passthrough_inst_init(Object *obj)
 
 static void tpm_passthrough_inst_finalize(Object *obj)
 {
+    printf("@@@tpm_passthrough_inst_finalize func ---- TEST\n");
+
     TPMPassthruState *tpm_pt = TPM_PASSTHROUGH(obj);
 
     tpm_passthrough_cancel_cmd(TPM_BACKEND(obj));
@@ -399,6 +431,8 @@ static const TypeInfo tpm_passthrough_info = {
 
 static void tpm_passthrough_register(void)
 {
+    printf("@@@tpm_passthrough_register func ---- TEST\n");
+
     type_register_static(&tpm_passthrough_info);
 }
 

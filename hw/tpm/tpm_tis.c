@@ -467,8 +467,6 @@ static void tpm_tis_dump_state(void *opaque, hwaddr addr)
 static uint64_t tpm_tis_mmio_read(void *opaque, hwaddr addr,
                                   unsigned size)
 {
-    printf("tpm_tis_mmio_read func -- TEST\n");
-    
     TPMState *s = opaque;
     uint16_t offset = addr & 0xffc;
     uint8_t shift = (addr & 0x3) * 8;
@@ -580,6 +578,8 @@ static uint64_t tpm_tis_mmio_read(void *opaque, hwaddr addr,
 
     trace_tpm_tis_mmio_read(size, addr, val);
 
+    printf("tpm_tis_mmio_read func -- TEST ///// %u \n", val);
+
     return val;
 }
 
@@ -629,12 +629,17 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
 
         if(val == 2){
             printf("---------CLEAR TPM COMMANDLINE----------\n");
+            
+            // hw passthrough test
+            /*
             int sys_re __attribute__((unused));;
-            sys_re = system("tpm2_send_command -T 'device' -d /dev/tpm1 < /home/mobileos7/SGX/VM/tpm_cmdline.bin > result.bin");
+            sys_re = system("sudo tpm2_send_command -T 'device' -d /dev/tpm1 < /home/mobileos7/SGX/VM/tpm_cmdline.bin > result.bin");
+            sys_re = system("sudo tpm2_send_command -T 'device' -d /dev/tpmrm0 < /home/mobileos7/SGX/VM/tpm_cmdline.bin > result_HW.bin");
+            sys_re = system("xxd result.bin >> result_EMU.txt");
+            sys_re = system("xxd result_HW.bin >> result_HW.txt");
+            */
             remove(path);
         }
-        
-
 
         if ((val & TPM_TIS_ACCESS_SEIZE)) {
             val &= ~(TPM_TIS_ACCESS_REQUEST_USE |
