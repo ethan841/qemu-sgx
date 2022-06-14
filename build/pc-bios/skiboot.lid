@@ -1,1 +1,1 @@
-/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/pc-bios/skiboot.lid
+/home/mobileosdcap2/TPM/qemu-sgx/pc-bios/skiboot.lid

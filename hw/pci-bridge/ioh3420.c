@@ -62,6 +62,8 @@ static uint8_t ioh3420_aer_vector(const PCIDevice *d)
 
 static int ioh3420_interrupts_init(PCIDevice *d, Error **errp)
 {
+    printf("ioh3420_interrupts_init func()\n");
+
     int rc;
 
     rc = msi_init(d, IOH_EP_MSI_OFFSET, IOH_EP_MSI_NR_VECTOR,
@@ -77,6 +79,8 @@ static int ioh3420_interrupts_init(PCIDevice *d, Error **errp)
 
 static void ioh3420_interrupts_uninit(PCIDevice *d)
 {
+    printf("ioh3420_interrupts_uninit func()\n");
+
     msi_uninit(d);
 }
 

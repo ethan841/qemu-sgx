@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 20 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:339  */
+#line 20 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:339  */
 
 #include <stdio.h>
 #include <inttypes.h>
@@ -147,7 +147,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 39 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:355  */
+#line 39 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:355  */
 
 	char *propnodename;
 	char *labelref;
@@ -1476,7 +1476,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 111 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 111 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			parser_output = build_dt_info((yyvsp[-2].flags), (yyvsp[-1].re), (yyvsp[0].node),
 			                              guess_boot_cpuid((yyvsp[0].node)));
@@ -1485,7 +1485,7 @@ yyreduce:
     break;
 
   case 3:
-#line 119 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 119 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.flags) = DTSF_V1;
 		}
@@ -1493,7 +1493,7 @@ yyreduce:
     break;
 
   case 4:
-#line 123 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 123 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.flags) = DTSF_V1 | DTSF_PLUGIN;
 		}
@@ -1501,7 +1501,7 @@ yyreduce:
     break;
 
   case 6:
-#line 131 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 131 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			if ((yyvsp[0].flags) != (yyvsp[-1].flags))
 				ERROR(&(yylsp[0]), "Header flags don't match earlier ones");
@@ -1511,7 +1511,7 @@ yyreduce:
     break;
 
   case 7:
-#line 140 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 140 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.re) = NULL;
 		}
@@ -1519,7 +1519,7 @@ yyreduce:
     break;
 
   case 8:
-#line 144 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 144 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.re) = chain_reserve_entry((yyvsp[-1].re), (yyvsp[0].re));
 		}
@@ -1527,7 +1527,7 @@ yyreduce:
     break;
 
   case 9:
-#line 151 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 151 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.re) = build_reserve_entry((yyvsp[-2].integer), (yyvsp[-1].integer));
 		}
@@ -1535,7 +1535,7 @@ yyreduce:
     break;
 
   case 10:
-#line 155 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 155 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			add_label(&(yyvsp[0].re)->labels, (yyvsp[-1].labelref));
 			(yyval.re) = (yyvsp[0].re);
@@ -1544,7 +1544,7 @@ yyreduce:
     break;
 
   case 11:
-#line 163 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 163 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.node) = name_node((yyvsp[0].node), "");
 		}
@@ -1552,7 +1552,7 @@ yyreduce:
     break;
 
   case 12:
-#line 167 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 167 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.node) = merge_nodes((yyvsp[-2].node), (yyvsp[0].node));
 		}
@@ -1560,7 +1560,7 @@ yyreduce:
     break;
 
   case 13:
-#line 171 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 171 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			/*
 			 * We rely on the rule being always:
@@ -1575,7 +1575,7 @@ yyreduce:
     break;
 
   case 14:
-#line 182 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 182 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			struct node *target = get_node_by_ref((yyvsp[-3].node), (yyvsp[-1].labelref));
 
@@ -1590,7 +1590,7 @@ yyreduce:
     break;
 
   case 15:
-#line 193 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 193 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			/*
 			 * We rely on the rule being always:
@@ -1613,7 +1613,7 @@ yyreduce:
     break;
 
   case 16:
-#line 212 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 212 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			struct node *target = get_node_by_ref((yyvsp[-3].node), (yyvsp[-1].labelref));
 
@@ -1629,7 +1629,7 @@ yyreduce:
     break;
 
   case 17:
-#line 224 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 224 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			struct node *target = get_node_by_ref((yyvsp[-3].node), (yyvsp[-1].labelref));
 
@@ -1645,7 +1645,7 @@ yyreduce:
     break;
 
   case 18:
-#line 239 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 239 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.node) = build_node((yyvsp[-3].proplist), (yyvsp[-2].nodelist));
 		}
@@ -1653,7 +1653,7 @@ yyreduce:
     break;
 
   case 19:
-#line 246 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 246 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.proplist) = NULL;
 		}
@@ -1661,7 +1661,7 @@ yyreduce:
     break;
 
   case 20:
-#line 250 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 250 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.proplist) = chain_property((yyvsp[0].prop), (yyvsp[-1].proplist));
 		}
@@ -1669,7 +1669,7 @@ yyreduce:
     break;
 
   case 21:
-#line 257 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 257 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.prop) = build_property((yyvsp[-3].propnodename), (yyvsp[-1].data));
 		}
@@ -1677,7 +1677,7 @@ yyreduce:
     break;
 
   case 22:
-#line 261 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 261 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.prop) = build_property((yyvsp[-1].propnodename), empty_data);
 		}
@@ -1685,7 +1685,7 @@ yyreduce:
     break;
 
   case 23:
-#line 265 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 265 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.prop) = build_property_delete((yyvsp[-1].propnodename));
 		}
@@ -1693,7 +1693,7 @@ yyreduce:
     break;
 
   case 24:
-#line 269 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 269 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			add_label(&(yyvsp[0].prop)->labels, (yyvsp[-1].labelref));
 			(yyval.prop) = (yyvsp[0].prop);
@@ -1702,7 +1702,7 @@ yyreduce:
     break;
 
   case 25:
-#line 277 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 277 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_merge((yyvsp[-1].data), (yyvsp[0].data));
 		}
@@ -1710,7 +1710,7 @@ yyreduce:
     break;
 
   case 26:
-#line 281 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 281 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_merge((yyvsp[-2].data), (yyvsp[-1].array).data);
 		}
@@ -1718,7 +1718,7 @@ yyreduce:
     break;
 
   case 27:
-#line 285 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 285 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_merge((yyvsp[-3].data), (yyvsp[-1].data));
 		}
@@ -1726,7 +1726,7 @@ yyreduce:
     break;
 
   case 28:
-#line 289 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 289 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_add_marker((yyvsp[-1].data), REF_PATH, (yyvsp[0].labelref));
 		}
@@ -1734,7 +1734,7 @@ yyreduce:
     break;
 
   case 29:
-#line 293 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 293 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			FILE *f = srcfile_relative_open((yyvsp[-5].data).val, NULL);
 			struct data d;
@@ -1754,7 +1754,7 @@ yyreduce:
     break;
 
   case 30:
-#line 309 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 309 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			FILE *f = srcfile_relative_open((yyvsp[-1].data).val, NULL);
 			struct data d = empty_data;
@@ -1768,7 +1768,7 @@ yyreduce:
     break;
 
   case 31:
-#line 319 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 319 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_add_marker((yyvsp[-1].data), LABEL, (yyvsp[0].labelref));
 		}
@@ -1776,7 +1776,7 @@ yyreduce:
     break;
 
   case 32:
-#line 326 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 326 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = empty_data;
 		}
@@ -1784,7 +1784,7 @@ yyreduce:
     break;
 
   case 33:
-#line 330 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 330 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = (yyvsp[-1].data);
 		}
@@ -1792,7 +1792,7 @@ yyreduce:
     break;
 
   case 34:
-#line 334 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 334 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_add_marker((yyvsp[-1].data), LABEL, (yyvsp[0].labelref));
 		}
@@ -1800,7 +1800,7 @@ yyreduce:
     break;
 
   case 35:
-#line 341 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 341 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			unsigned long long bits;
 			enum markertype type = TYPE_UINT32;
@@ -1825,7 +1825,7 @@ yyreduce:
     break;
 
   case 36:
-#line 362 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 362 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.array).data = data_add_marker(empty_data, TYPE_UINT32, NULL);
 			(yyval.array).bits = 32;
@@ -1834,7 +1834,7 @@ yyreduce:
     break;
 
   case 37:
-#line 367 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 367 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			if ((yyvsp[-1].array).bits < 64) {
 				uint64_t mask = (1ULL << (yyvsp[-1].array).bits) - 1;
@@ -1857,7 +1857,7 @@ yyreduce:
     break;
 
   case 38:
-#line 386 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 386 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			uint64_t val = ~0ULL >> (64 - (yyvsp[-1].array).bits);
 
@@ -1875,7 +1875,7 @@ yyreduce:
     break;
 
   case 39:
-#line 400 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 400 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.array).data = data_add_marker((yyvsp[-1].array).data, LABEL, (yyvsp[0].labelref));
 		}
@@ -1883,7 +1883,7 @@ yyreduce:
     break;
 
   case 42:
-#line 409 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 409 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.integer) = (yyvsp[-1].integer);
 		}
@@ -1891,109 +1891,109 @@ yyreduce:
     break;
 
   case 45:
-#line 420 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 420 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-4].integer) ? (yyvsp[-2].integer) : (yyvsp[0].integer); }
 #line 1897 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 425 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 425 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) || (yyvsp[0].integer); }
 #line 1903 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 430 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 430 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) && (yyvsp[0].integer); }
 #line 1909 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 435 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 435 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) | (yyvsp[0].integer); }
 #line 1915 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 440 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 440 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) ^ (yyvsp[0].integer); }
 #line 1921 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 445 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 445 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) & (yyvsp[0].integer); }
 #line 1927 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 450 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 450 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) == (yyvsp[0].integer); }
 #line 1933 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 451 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 451 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) != (yyvsp[0].integer); }
 #line 1939 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 456 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 456 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) < (yyvsp[0].integer); }
 #line 1945 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 457 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 457 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) > (yyvsp[0].integer); }
 #line 1951 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 458 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 458 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) <= (yyvsp[0].integer); }
 #line 1957 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 459 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 459 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) >= (yyvsp[0].integer); }
 #line 1963 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 463 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 463 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) << (yyvsp[0].integer); }
 #line 1969 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 464 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 464 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) >> (yyvsp[0].integer); }
 #line 1975 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 469 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 469 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) + (yyvsp[0].integer); }
 #line 1981 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 470 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 470 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) - (yyvsp[0].integer); }
 #line 1987 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 475 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 475 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = (yyvsp[-2].integer) * (yyvsp[0].integer); }
 #line 1993 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 477 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 477 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			if ((yyvsp[0].integer) != 0) {
 				(yyval.integer) = (yyvsp[-2].integer) / (yyvsp[0].integer);
@@ -2006,7 +2006,7 @@ yyreduce:
     break;
 
   case 72:
-#line 486 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 486 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			if ((yyvsp[0].integer) != 0) {
 				(yyval.integer) = (yyvsp[-2].integer) % (yyvsp[0].integer);
@@ -2019,25 +2019,25 @@ yyreduce:
     break;
 
   case 75:
-#line 499 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 499 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = -(yyvsp[0].integer); }
 #line 2025 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 500 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 500 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = ~(yyvsp[0].integer); }
 #line 2031 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 501 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 501 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     { (yyval.integer) = !(yyvsp[0].integer); }
 #line 2037 "dtc-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 506 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 506 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_add_marker(empty_data, TYPE_UINT8, NULL);
 		}
@@ -2045,7 +2045,7 @@ yyreduce:
     break;
 
   case 79:
-#line 510 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 510 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_append_byte((yyvsp[-1].data), (yyvsp[0].byte));
 		}
@@ -2053,7 +2053,7 @@ yyreduce:
     break;
 
   case 80:
-#line 514 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 514 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.data) = data_add_marker((yyvsp[-1].data), LABEL, (yyvsp[0].labelref));
 		}
@@ -2061,7 +2061,7 @@ yyreduce:
     break;
 
   case 81:
-#line 521 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 521 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.nodelist) = NULL;
 		}
@@ -2069,7 +2069,7 @@ yyreduce:
     break;
 
   case 82:
-#line 525 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 525 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.nodelist) = chain_node((yyvsp[-1].node), (yyvsp[0].nodelist));
 		}
@@ -2077,7 +2077,7 @@ yyreduce:
     break;
 
   case 83:
-#line 529 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 529 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			ERROR(&(yylsp[0]), "Properties must precede subnodes");
 			YYERROR;
@@ -2086,7 +2086,7 @@ yyreduce:
     break;
 
   case 84:
-#line 537 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 537 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.node) = name_node((yyvsp[0].node), (yyvsp[-1].propnodename));
 		}
@@ -2094,7 +2094,7 @@ yyreduce:
     break;
 
   case 85:
-#line 541 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 541 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.node) = name_node(build_node_delete(), (yyvsp[-1].propnodename));
 		}
@@ -2102,7 +2102,7 @@ yyreduce:
     break;
 
   case 86:
-#line 545 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 545 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			(yyval.node) = omit_node_if_unused((yyvsp[0].node));
 		}
@@ -2110,7 +2110,7 @@ yyreduce:
     break;
 
   case 87:
-#line 549 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
+#line 549 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1646  */
     {
 			add_label(&(yyvsp[0].node)->labels, (yyvsp[-1].labelref));
 			(yyval.node) = (yyvsp[0].node);
@@ -2354,7 +2354,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 555 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1906  */
+#line 555 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1906  */
 
 
 void yyerror(char const *s)

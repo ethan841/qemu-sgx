@@ -76,7 +76,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 39 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1909  */
+#line 39 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/dtc-parser.y" /* yacc.c:1909  */
 
 	char *propnodename;
 	char *labelref;

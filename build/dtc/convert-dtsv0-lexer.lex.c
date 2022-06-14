@@ -541,7 +541,7 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 1 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 /*
  * (C) Copyright David Gibson <dwg@au1.ibm.com>, IBM Corporation.  2005, 2008.
  *
@@ -563,7 +563,7 @@ char *yytext;
 #define YY_NO_INPUT 1
 
 
-#line 35 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 35 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -821,7 +821,7 @@ YY_DECL
 		}
 
 	{
-#line 76 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 76 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 
 #line 827 "convert-dtsv0-lexer.lex.c"
 
@@ -879,25 +879,25 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 77 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 77 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 ECHO;
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 79 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 79 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 ECHO;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 81 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 81 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 {
 			die("Input dts file is already version 1\n");
 		}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 85 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 85 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 {
 			if (!v1_tagged) {
 				fprintf(yyout, "/dts-v1/;\n\n");
@@ -910,12 +910,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 95 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 95 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 ECHO;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 97 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 97 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 {
 			if (*yytext == 'b')
 				cbase = 2;
@@ -929,7 +929,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 108 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 108 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 {
 			unsigned long long val;
 			int obase = 16, width = 0;
@@ -975,27 +975,27 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 151 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 151 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 ECHO;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 153 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 153 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 ECHO;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 155 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 155 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 fprintf(yyout, "&{/%s}", yytext + 2);
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 157 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 157 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 ECHO;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 159 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 159 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 {
 			ECHO;
 			BEGIN(INITIAL);
@@ -1003,7 +1003,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 164 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 164 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 {
 			ECHO;
 			last_name = xstrdup(yytext);
@@ -1013,12 +1013,12 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 170 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 170 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 ECHO;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 172 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 172 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 {	/* Hack to convert old style memreserves */
 			saw_hyphen = 1;
 			fprintf(yyout, " ");
@@ -1026,7 +1026,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 177 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 177 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 {
 			if (!v1_tagged) {
 				fprintf(yyout, "/dts-v1/;\n\n");
@@ -1045,7 +1045,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 193 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 193 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 ECHO;
 	YY_BREAK
 #line 1052 "convert-dtsv0-lexer.lex.c"
@@ -2019,7 +2019,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 193 "/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/dtc/convert-dtsv0-lexer.l"
+#line 193 "/home/mobileosdcap2/TPM/qemu-sgx/dtc/convert-dtsv0-lexer.l"
 
 /* Usage related data. */
 static const char usage_synopsis[] = "convert-dtsv0 [options] <v0 dts file>...";

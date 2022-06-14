@@ -53,7 +53,7 @@ XKBCOMMON_CFLAGS=
 XKBCOMMON_LIBS=-lxkbcommon
 VERSION=4.0.0
 PKGVERSION=
-SRC_PATH=/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx
+SRC_PATH=/home/mobileosdcap2/TPM/qemu-sgx
 TARGET_DIRS=x86_64-softmmu
 BUILD_DOCS=yes
 CONFIG_STAMP=_0103883b6285850405005a50b442d54ded4be370
@@ -233,7 +233,7 @@ CFLAGS=-O2 -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -g
 CFLAGS_NOPIE=
 QEMU_CFLAGS=-I/usr/include/pixman-1 -I$(SRC_PATH)/dtc/libfdt -Werror -DHAS_LIBSSH2_SFTP_FSYNC  -pthread -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -pthread -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -fPIE -DPIE -m64 -mcx16 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -Wstrict-prototypes -Wredundant-decls -Wall -Wundef -Wwrite-strings -Wmissing-prototypes -fno-strict-aliasing -fno-common -fwrapv -std=gnu99  -Wexpansion-to-defined -Wendif-labels -Wno-shift-negative-value -Wno-missing-include-dirs -Wempty-body -Wnested-externs -Wformat-security -Wformat-y2k -Winit-self -Wignored-qualifiers -Wold-style-declaration -Wold-style-definition -Wtype-limits -fstack-protector-strong  -I/usr/include/p11-kit-1  -I/usr/include/libpng16 -I/usr/include/spice-server -I/usr/include/spice-1 -I$(SRC_PATH)/capstone/include
 QEMU_CXXFLAGS= -D__STDC_LIMIT_MACROS -Werror -DHAS_LIBSSH2_SFTP_FSYNC -pthread -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -pthread -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -fPIE -DPIE -m64 -mcx16 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -Wall -Wundef -Wwrite-strings -fno-strict-aliasing -fno-common -fwrapv -std=gnu++98 -Wexpansion-to-defined -Wendif-labels -Wno-shift-negative-value -Wno-missing-include-dirs -Wempty-body -Wformat-security -Wformat-y2k -Winit-self -Wignored-qualifiers -Wtype-limits -fstack-protector-strong -I/usr/include/p11-kit-1 -I/usr/include/libpng16 -I/usr/include/spice-server -I/usr/include/spice-1 -I$(SRC_PATH)/capstone/include
-QEMU_INCLUDES=-iquote $(SRC_PATH)/tcg -iquote $(SRC_PATH)/tcg/i386 -I$(SRC_PATH)/linux-headers -I/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/build/linux-headers -iquote . -iquote $(SRC_PATH) -iquote $(SRC_PATH)/accel/tcg -iquote $(SRC_PATH)/include
+QEMU_INCLUDES=-iquote $(SRC_PATH)/tcg -iquote $(SRC_PATH)/tcg/i386 -I$(SRC_PATH)/linux-headers -I/home/mobileosdcap2/TPM/qemu-sgx/build/linux-headers -iquote . -iquote $(SRC_PATH) -iquote $(SRC_PATH)/accel/tcg -iquote $(SRC_PATH)/include
 AUTOCONF_HOST := 
 LDFLAGS=-Wl,--warn-common -Wl,-z,relro -Wl,-z,now -pie -m64 -g 
 LDFLAGS_NOPIE=
@@ -250,6 +250,7 @@ LIBS_QGA+=-lm -Wl,--export-dynamic -lgmodule-2.0 -pthread -lglib-2.0 -lgthread-2
 TASN1_LIBS=-ltasn1
 TASN1_CFLAGS=
 POD2MAN=pod2man --utf8
+HAVE_USER_DOCKER=y
 CONFIG_LIBUDEV=y
 LIBUDEV_LIBS=-ludev
 x86_64-softmmu/config-devices.mak: CONFIG_XEN=y

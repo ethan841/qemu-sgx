@@ -1,1 +1,1 @@
-/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/tests/fp/Makefile
+/home/mobileosdcap2/TPM/qemu-sgx/tests/fp/Makefile

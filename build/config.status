@@ -10,18 +10,16 @@ unset CPP
 unset CXX
 unset INSTALL
 unset LD
-LD_LIBRARY_PATH='/opt/intel/sgxsdk/sdk_libs'
-export LD_LIBRARY_PATH
+unset LD_LIBRARY_PATH
 unset LIBTOOL
 unset MAKE
 unset NM
 unset OBJCOPY
-PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/opt/intel/sgxsdk/bin:/opt/intel/sgxsdk/bin/x64'
+PATH='/home/mobileosdcap2/.nvm/versions/node/v14.15.1/bin:/home/mobileosdcap2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
 export PATH
 unset PKG_CONFIG
 unset PKG_CONFIG_LIBDIR
-PKG_CONFIG_PATH=':/opt/intel/sgxsdk/pkgconfig'
-export PKG_CONFIG_PATH
+unset PKG_CONFIG_PATH
 unset PYTHON
 unset SDL_CONFIG
 unset SDL2_CONFIG

@@ -152,5 +152,6 @@
 #define CONFIG_PARALLELS 1
 #define CONFIG_SHEEPDOG 1
 #define HOST_DSOSUF ".so"
+#define HAVE_USER_DOCKER 1
 #define CONFIG_LIBUDEV 1
 #define CONFIG_NUMA 1

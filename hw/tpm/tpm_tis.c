@@ -39,6 +39,15 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <time.h>
+
+//PCR check
+//#include <curl/curl.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+
+#define buffersize 1024
 
 #define TPM_TIS_NUM_LOCALITIES      5     /* per spec */
 #define TPM_TIS_LOCALITY_SHIFT      12
@@ -106,7 +115,7 @@ static void cmd_logger(uint64_t* val)
     int file_ops = 1;
     int file_ops2 = 1;
 
-    if((out=fopen("/home/mobileos7/SGX/VM/tpm_cmd.bin", "ab"))==NULL){
+    if((out=fopen("/home/mobileosdcap2/TPM/VM/tpm_cmd.bin", "ab"))==NULL){
         printf("file not exist!");
         file_ops = 0;
     }
@@ -115,7 +124,7 @@ static void cmd_logger(uint64_t* val)
         fwrite(val, sizeof(uint8_t), 1, out);
     }
 
-    if((out2=fopen("/home/mobileos7/SGX/VM/tpm_cmdline.bin", "ab"))==NULL){
+    if((out2=fopen("/home/mobileosdcap2/TPM/VM/tpm_cmdline.bin", "ab"))==NULL){
         printf("file not exist!");
         file_ops = 0;
     }
@@ -127,7 +136,128 @@ static void cmd_logger(uint64_t* val)
     fclose(out);
     fclose(out2);
     printf("-----CMD LOG UPDATE!-----\n");
+
+    return;
 }
+
+/* VM PCR Management Server Communication */
+/*
+struct PCR_STRING
+{
+    char *ptr;
+    size_t len;
+};
+
+static void init_String(struct PCR_STRING *s)
+{
+    s->len = 0;
+    s->ptr = malloc(s->len+1); 
+    if (s->ptr == NULL) {
+        printf("malloc() failed\n");
+        exit(EXIT_FAILURE);
+    }
+    s->ptr[0] = '\0';
+}
+
+static size_t writefunc(void *ptr, size_t size, size_t nmemb, struct PCR_STRING *s)
+{
+    size_t new_len = s->len + size*nmemb;
+    s->ptr = realloc(s->ptr, new_len+1);
+    if(s->ptr == NULL){
+        printf("realloc() failed\n");
+        exit(EXIT_FAILURE);
+    }
+    memcpy(s->ptr+s->len, ptr, size*nmemb);
+    s->ptr[new_len] = '\0';
+    s->len = new_len;
+
+    return size*nmemb;
+}
+*/
+static uint64_t pcr_req(void)
+{
+    uint64_t result = 0x01;
+
+    /*
+    CURL *curl;
+    CURLcode res;
+    struct PCR_STRING s;
+    uint64_t result = 0x01;
+
+    curl = curl_easy_init();
+    if(curl) {
+        
+        init_String(&s);
+
+        curl_easy_setopt(curl, CURLOPT_URL, "http://172.25.244.75:8085/test");
+        curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L);
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        //curl_easy_setopt(curl, CURLOPT_PROXY_SSL_VERIFYPEER, 0L);
+        //curl_easy_setopt(curl, CURLOPT_USERPWD, "user:pass");
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "curl/7.58.0");
+        //curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 50L);
+        //curl_easy_setopt(curl, CURLOPT_TCP_KEEPALIVE, 1L);
+
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
+        //curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header_string);
+
+        res = curl_easy_perform(curl);
+        if(res == 0){
+            printf("SERVER CONNECTION SUCCESSFUL!\n");
+        }
+
+        printf("PCR SERVER RESPOND - %s\n", s.ptr);
+
+        curl_easy_cleanup(curl);
+    }
+    */
+
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    int read_res = 0;
+    //int pid_msg_res = 0;
+  
+    struct sockaddr_in serv_addr;
+    memset(&serv_addr, 0, sizeof(serv_addr));  
+    serv_addr.sin_family = AF_INET;  
+    serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1");  
+    serv_addr.sin_port = htons(5566); 
+    connect(sock, (struct sockaddr*)&serv_addr, sizeof(serv_addr));
+
+    //const char *message = "Test Message";
+    //send(sock, message, strlen(message)+1, 0);
+
+    int qemu_pid;
+
+    qemu_pid = (int)getpid();
+    if(qemu_pid){
+
+    }
+
+    send(sock, &qemu_pid, sizeof(qemu_pid), 0);
+
+    //char *buffer = (char*) calloc(buffersize, sizeof(char));
+    uint64_t buffer;
+
+    //read_res = read(sock, buffer, buffersize);
+    read_res = read(sock, &buffer, sizeof(uint64_t));
+    if (read_res != 0){
+
+    }
+    //printf("result form server: %d\n", (int)(atoi(buffer)));
+    printf("result form server: %lu\n", buffer);
+
+    //free(message);
+    //free(buffer);
+    close(sock);
+
+    result = buffer;
+
+    return result;
+}
+
 
 /* local prototypes */
 
@@ -625,7 +755,7 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
     case TPM_TIS_REG_ACCESS:
         printf("------TPM_TIS_REG_ACCESS %x and val = %lu\n", TPM_TIS_REG_ACCESS, val);
         
-        char path[] = "/home/mobileos7/SGX/VM/tpm_cmdline.bin";
+        char path[] = "/home/mobileosdcap2/TPM/VM/tpm_cmdline.bin";
 
         if(val == 2){
             printf("---------CLEAR TPM COMMANDLINE----------\n");
@@ -869,8 +999,50 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
         printf("------TPM_TIS_REG_DATA_FIFO/XFIFO %x and val = %lu\n", TPM_TIS_REG_DATA_FIFO, val);
         printf("----------Write val in tpm_cmd.bin file.----------\n");
     
+        FILE* out2;
+        uint8_t PCRTMP;
+
         cmd_logger(&val);
-        //cmdline_logger(&val);
+
+        //val = 0x00;
+
+        //PCR_EXTEND_CHECK
+        if((out2=fopen("/home/mobileosdcap2/TPM/VM/tpm_cmdline.bin", "r"))==NULL){
+                printf("file not exist!");
+            }
+        
+        int fileop_dump3 = fseek(out2, -2, SEEK_END);
+
+        if(fileop_dump3 != 0)
+                printf("ERROR\n");
+
+        int fileop_dump2 = fread(&PCRTMP, sizeof(uint8_t), 1, out2);
+
+        if(fileop_dump2 == 0)
+            printf("ERROR\n");
+
+        printf("PCR_EXTEND_CHECK => %u\n", PCRTMP);
+
+        if (PCRTMP == 0x04){
+            fileop_dump3 = fseek(out2, -4, SEEK_END);
+            fileop_dump2 = fread(&PCRTMP, sizeof(uint8_t), 1, out2);
+
+            if (PCRTMP == 0x04){
+                
+                //VM PCR SERVER COMMUNICATION
+
+                 val = pcr_req();
+
+                // END
+
+                //val = 0x00; // --> PCR CHANGE (PCR 10)
+                printf("PCR CHANGED! -- %lu\n", val);
+            }
+        }
+
+        fclose(out2);
+
+        //PCR_EXTEND_CHECK END
 
         /* data fifo */
         if (s->active_locty != locty) {
@@ -1154,8 +1326,8 @@ static void tpm_tis_register(void)
 {
     printf("tpm_tis_register func / tpm_tis.c -- TEST\n");
     
-    char path[] = "/home/mobileos7/SGX/VM/tpm_cmd.bin";
-    char path2[] = "/home/mobileos7/SGX/VM/tpm_cmdline.bin";
+    char path[] = "/home/mobileosdcap2/TPM/VM/tpm_cmd.bin";
+    char path2[] = "/home/mobileosdcap2/TPM/VM/tpm_cmdline.bin";
     
     printf("---------CLEAR TPM COMMAND LOG----------\n");
     remove(path);

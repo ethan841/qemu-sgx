@@ -1,1 +1,1 @@
-/home/mobileos7/SGX/qemu-sgx-edit/qemu-sgx/.gdbinit
+/home/mobileosdcap2/TPM/qemu-sgx/.gdbinit
