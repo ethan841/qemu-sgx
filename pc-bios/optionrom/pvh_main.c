@@ -26,6 +26,7 @@ asm (".code32"); /* this code will be executed in protected mode */
 #include "optrom.h"
 #include "optrom_fw_cfg.h"
 #include "../../include/hw/xen/start_info.h"
+#include "benchmark.h"
 
 #define RSDP_SIGNATURE          0x2052545020445352LL /* "RSD PTR " */
 #define RSDP_AREA_ADDR          0x000E0000
@@ -129,5 +130,7 @@ void pvh_load_kernel(void)
 
     bios_cfg_read_entry(&kernel_entry, FW_CFG_KERNEL_ENTRY, 4, fw_cfg_version);
 
+    outb(LINUX_START_PVHBOOT, LINUX_EXIT_PORT);
+    
     asm volatile("jmp *%1" : : "b"(&start_info), "c"(kernel_entry));
 }

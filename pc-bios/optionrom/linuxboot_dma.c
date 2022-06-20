@@ -65,6 +65,7 @@ asm(
 #include <stdint.h>
 #include "optrom.h"
 #include "optrom_fw_cfg.h"
+#include "benchmark.h"
 
 static inline void set_es(void *addr)
 {
@@ -188,6 +189,8 @@ void load_kernel(void)
     /* Boot linux */
     segment_addr = ((uint32_t)setup_addr >> 4);
     stack_addr = (uint32_t)(cmdline_addr - setup_addr - 16);
+
+    outb(LINUX_START_BOOT, LINUX_EXIT_PORT);
 
     /* As we are changing critical registers, we cannot leave freedom to the
      * compiler.
